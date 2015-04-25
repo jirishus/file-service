@@ -21,9 +21,9 @@ app.get('/convert', function(req,res) {
 
     phantom.create(function(ph) {
         ph.createPage(function(page) {
-            page.open('http://www.brandongagon.com', function(status) {
+            page.open('http://www.apple.com/', function(status) {
                 if(status === 'success') {
-                    page.render('public/newfile.pdf', function() {
+                    page.render('public/website.pdf', function() {
                       res.end('File Converted');
                    });
                 }
