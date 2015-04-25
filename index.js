@@ -4,6 +4,8 @@ var express = require('express');
 // create express app
 var app = express();
 
+app.set('port', (process.env.PORT || 5000));
+
 // Define Routes
 
 // Index
@@ -19,7 +21,6 @@ app.get('/info', function(req,res) {
 
 });
 
-// Listen to port 9500
-app.listen(9500, function() {
-    console.log('listening on port 9500')
+app.listen(app.get('port'), function() {
+  console.log("Node app is running at localhost:" + app.get('port'));
 });
