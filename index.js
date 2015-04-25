@@ -4,12 +4,16 @@ var app = express();
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
 
-app.get('/', function(request, response) {
-  response.send('Hello World!');
+app.get('/', function(req,res) {
+  res.send('index info');
 });
 
-app.get('/info', function(request, response) {
-    response.send('info request');
+app.get('/info', function(req,res) {
+
+    var ranNum = Math.floor(Math.random() * 100)
+
+    res.send('info request' + ranNum);
+
 });
 
 app.listen(app.get('port'), function() {
