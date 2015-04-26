@@ -17,8 +17,14 @@ app.get('/info', function(req,res) {
 
 });
 
-app.get('/convert', function(req,res) {
+app.post('/convert', function(req,res) {
 
+    console.log('converting');
+    console.log(req);
+
+    res.end('Website Converted')
+    
+    /*
     phantom.create(function(ph) {
         ph.createPage(function(page) {
             page.open('http://www.apple.com/', function(status) {
@@ -30,6 +36,7 @@ app.get('/convert', function(req,res) {
             });
         });
     });  
+    */
 
 });
 
