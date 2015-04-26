@@ -47,6 +47,8 @@ app.post('/convert', function(req,res) {
                 }
             });
         });
+    }, {
+        dnodeOpts: {weak: false}
     });  
     
 
