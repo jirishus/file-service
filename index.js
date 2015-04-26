@@ -1,3 +1,6 @@
+// core modules
+var fs              = require('fs');
+
 var express         = require('express');
 var bodyParser      = require('body-parser');
 var phantom         = require('phantom');
@@ -23,10 +26,17 @@ app.get('/', function(req,res) {
   res.send('index info');
 });
 
+app.get('/files', function(req,res) {
+
+  var files = fs.readdirSync('public');
+
+  res.end(JSON.stringify(files));
+
+});
+
 app.get('/info', function(req,res) {
 
     var ranNum = Math.floor(Math.random() * 100)
-
     res.send('info request' + ranNum);
 
 });
@@ -39,17 +49,17 @@ app.post('/convert', function(req,res) {
     var userUrl     = userSite.site;
     var fileName    = userSite.site.split('.')[1];
     
+    console.log(userSite)
+    console.log(userUrl)
     
     phantom.create(function(ph) {
         ph.createPage(function(page) {
             page.open(userUrl, function(status) {
 
-                console.log(status);
-
                 if(status === 'success') {
                     page.render('public/' + fileName + '.pdf', function() {
 
-                       res.end('File Converted');
+                       res.end('success');
 
                        ph.exit();
 
