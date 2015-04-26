@@ -28,7 +28,6 @@ app.post('/convert', function(req,res) {
 
     console.log('converting');
     
-    //var siteUrl  = req.body.site.split('.')[1];
     var userSite    = req.body;
     var userUrl     = userSite.site;
     var fileName    = userSite.site.split('.')[1];
@@ -37,8 +36,12 @@ app.post('/convert', function(req,res) {
     phantom.create(function(ph) {
         ph.createPage(function(page) {
             page.open(userUrl, function(status) {
+
+                console.log(status);
+
                 if(status === 'success') {
                     page.render('public/' + fileName + '.pdf', function() {
+
                        res.end('File Converted');
 
                        ph.exit();
@@ -53,7 +56,6 @@ app.post('/convert', function(req,res) {
     
 
 });
-
 
 
 app.listen(app.get('port'), function() {
