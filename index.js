@@ -1,9 +1,16 @@
-var express = require('express');
-var phantom = require('phantom');
+var express         = require('express');
+var bodyParser      = require('body-parser');
+var phantom         = require('phantom');
+
+// express app 
 var app = express();
 
 app.set('port', (process.env.PORT || 5000));
 app.use(express.static(__dirname + '/public'));
+
+// body parser
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 
 app.get('/', function(req,res) {
   res.send('index info');
@@ -20,23 +27,28 @@ app.get('/info', function(req,res) {
 app.post('/convert', function(req,res) {
 
     console.log('converting');
-    console.log(req);
-
-    res.end('Website Converted')
     
-    /*
+    //var siteUrl  = req.body.site.split('.')[1];
+    var userSite    = req.body;
+    var userUrl     = userSite.site;
+    var fileName    = userSite.site.split('.')[1];
+    
+    
     phantom.create(function(ph) {
         ph.createPage(function(page) {
-            page.open('http://www.apple.com/', function(status) {
+            page.open(userUrl, function(status) {
                 if(status === 'success') {
-                    page.render('public/website.pdf', function() {
-                      res.end('File Converted');
-                   });
+                    page.render('public/' + fileName + '.pdf', function() {
+                       res.end('File Converted');
+
+                       ph.exit();
+
+                    });
                 }
             });
         });
     });  
-    */
+    
 
 });
 
